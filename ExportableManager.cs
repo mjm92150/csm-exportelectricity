@@ -44,7 +44,7 @@ namespace Exportable
 
 		public void LoadSettings ()
 		{
-			Log ("Load Settings");
+			Log ("Chargement des préférences");
 			try {
 				using (System.IO.StreamReader file = 
 					new System.IO.StreamReader(CONF, true))
@@ -68,14 +68,14 @@ namespace Exportable
 				}
 			} catch (Exception e) {
 				// no file? use defaults
-				Log ("Using defaults: " + e.ToString());
+				Log ("Utilisation par défaut : " + e.ToString());
 				exportables[Ids.ELECTRICITY].SetEnabled(true);
 			}
 		}
 
 		public void StoreSettings ()
 		{
-			Log ("Store Settings");
+			Log ("Préférences du magasin");
 			try {
 				using (System.IO.FileStream file =
 					new System.IO.FileStream(CONF, FileMode.Create))
@@ -88,12 +88,12 @@ namespace Exportable
 						}
 					}
 					String cs = String.Join(",", enabled_ids.ToArray()) + "|" + multiplier.ToString();
-					Log ("Storing settings - enabled: " + cs);
+					Log ("Préférence du rangement - activé : " + cs);
 					sw.WriteLine(cs);
 					sw.Flush();
 				}
 			} catch (Exception e) {
-				Log ("Error storing settings: " + e.ToString());
+				Log ("Erreur des paramètres stockés: " + e.ToString());
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace Exportable
 			if (exportables.ContainsKey (id)) {
 				Exportable exp = exportables [id];
 				if (exp.GetEnabled()) {
-					Log ("Calculating Income for " + id);
+					Log ("Calcul des revenus pour " + id);
 					income = exp.CalculateIncome (d, weekPortion);
 				}
 			}
@@ -115,7 +115,7 @@ namespace Exportable
 		public double CalculateIncome (District d, double weekPortion)
 		{
 			double total = 0.0;
-			Log ("Calculating Income");
+			Log ("Calcul des revenus");
 
 			foreach (var id in exportables.Keys) {
 				total += CalculateIncome (d, id, weekPortion);
