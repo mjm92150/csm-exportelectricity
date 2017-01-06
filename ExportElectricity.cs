@@ -9,7 +9,7 @@ namespace ExportElectricityMod
 {
 	public static class ExpmHolder
 	{
-		// because c# doesn't let you have bare variables in a namespace
+		// Parce que c# ne tolère pas des variable nul dans le nom
 		private static Exportable.ExportableManager expm = null;
 
 		public static Exportable.ExportableManager get()
@@ -24,9 +24,9 @@ namespace ExportElectricityMod
 
 	public static class Debugger
 	{
-		// Debugger.Write appends to a text file.  This is here because Debug.Log wasn't having any effect
-		// when called from OnUpdateMoneyAmount.  Maybe a Unity thing that event handlers can't log?  I dunno.
-		public static bool enabled = false; // switch to true for development.  Also enabled automatically on exception.
+		// Programme de mise au poit. Écrire ce qui ce passe dans un fichier texte.  C'est ici à cause de la mise au point. Celle ci n'a aucun effet
+		// quand cela provient du fichier nommé OnUpdateMoneyAmount.  Peut-être une chose unique que les évènements des gestionnaires ne euvent pas enregistrer ?  Je ne sais pas.
+		public static bool enabled = false; // modifier à vrai "true" pour le développement.  Aussi permit sur l'exception automatiquement.
 		public static void Write(String s)
 		{
 			if (!enabled)
@@ -46,17 +46,17 @@ namespace ExportElectricityMod
 	{
 		public string Name 
 		{
-			get { return "Export Electricity Mod"; }
+			get { return "Mode d'Export d'Électricité"; }
 		}
 
 		public string Description 
 		{
-			get { return "Earn money for unused electricity and (optionally) other production."; }
+			get { return "Gagner de l'argent en utilisant l'électricité non utilisée et (option) autre production."; }
 		}
 
 		public void OnSettingsUI(UIHelperBase helper)
 		{
-			UIHelperBase group = helper.AddGroup("Check to enable income from excess capacity");
+			UIHelperBase group = helper.AddGroup("Permet le contrôle des revenus sur le surplus de capacité");
 			ExpmHolder.get().AddOptions (group);			
 		}
 	}
@@ -76,7 +76,7 @@ namespace ExportElectricityMod
 	            
 	            Debugger.Write("\r\n== OnUpdateMoneyAmount ==");
 
-				double sec_per_day = 75600.0; // for some reason
+				double sec_per_day = 75600.0; // pour quelques raisons
 				double sec_per_week = 7 * sec_per_day;
 				double week_proportion = 0.0;
 				int export_earnings = 0;
@@ -93,7 +93,7 @@ namespace ExportElectricityMod
 				if (!updated) {
 					updated = true;
 					prevDate = this.managers.threading.simulationTime;
-					Debugger.Write("first run");
+					Debugger.Write("première exécution");
 				} else {
 					System.DateTime newDate = this.managers.threading.simulationTime;
 					System.TimeSpan timeDiff = newDate.Subtract (prevDate);
@@ -102,10 +102,10 @@ namespace ExportElectricityMod
 						Debugger.Write("proportion: " + week_proportion.ToString());
 						EconomyManager EM = Singleton<EconomyManager>.instance;
 						if (EM != null) {
-							// add income							
+							// ajouter aux revenus							
 							export_earnings = (int) ExpmHolder.get().CalculateIncome(d, week_proportion);
 							earnings_shown = export_earnings / 100;
-							Debugger.Write("Total earnings: " + earnings_shown.ToString());
+							Debugger.Write("Gains Total: " + earnings_shown.ToString());
 							EM.AddResource(EconomyManager.Resource.PublicIncome,
 								export_earnings,
 								ItemClass.Service.None,
@@ -120,7 +120,7 @@ namespace ExportElectricityMod
 			}
 	        catch (Exception ex)
 	        {
-	        	// shouldn't happen, but if it does, start logging
+	        	// cela ne devrait pas arriver mais s'il le fait, recommencer
 	        	Debugger.enabled = true;
 	        	Debugger.Write("Exception " + ex.Message.ToString());
 	        }
