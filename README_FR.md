@@ -1,7 +1,7 @@
 # csm-exportelectricity
 Un mode simple de Cities Skylines pour gagner de l'argent à partir de production exédentaire, y compris :
 * École primaire et/ou élementaire
-* Collège ou Lycée
+* Collège et/ou Lycée
 * Université
 * Électricité (activé par défaut)
 * Santé
